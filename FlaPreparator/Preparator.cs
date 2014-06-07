@@ -19,12 +19,15 @@ class Utf8StringWriter : StringWriter {
 namespace FlaPreparator {
   public class Preparator {
       public void Process(String fla) {
+          ZipFile zip2 = ZipFile.Read(fla.Replace(".fla", "2.fla"));
           using (ZipFile zip = ZipFile.Read(fla)) {
               var lib = new Library();
               lib.CleanUp(zip);
               lib.Load(zip);
-              lib.items.ToString();
+              lib.Save(zip2);
           }
+          zip2.Save(zip2.Name);
+          zip2.Dispose();
       }
 
   }

@@ -36,5 +36,15 @@ namespace FlaPreparator.Mapping {
 
         [XmlAttribute("isSpriteSubclass")]
         public String isSpriteSubclass { get; set; }
+
+        public bool IsSprite() {
+            foreach (var layers in timeline[0].layers) {
+                foreach (var frame in layers.frames) {
+                    var shape = frame.elements.FirstOrDefault((item) => { return item is DOMShape; });
+                    if (shape != null) { return true; }
+                }
+            }
+            return false;
+        }
     }
 }

@@ -16,7 +16,26 @@ namespace FlaPreparator.Mapping {
           List<String> _processedUsed = new List<String>();
           String _xmlns = "http://ns.adobe.com/xfl/2008/";
 
-          public Dictionary<String, DOMSymbolItem> items = new Dictionary<String, DOMSymbolItem>();
+          Dictionary<String, DOMSymbolItem> items = new Dictionary<String, DOMSymbolItem>();
+          public Dictionary<String, DOMSymbolItem> Items { get { return items; } }
+
+          public IEnumerable<String> Symbols {
+              get {
+                  foreach(String name in items.Keys) {
+                      var symbol = items[name];
+                      if (!symbol.IsSprite()) { yield return name; }
+                  }
+              }
+          }
+
+          public IEnumerable<String> Sprites {
+              get {
+                  foreach (String name in items.Keys) {
+                      var symbol = items[name];
+                      if (symbol.IsSprite()) { yield return name; }
+                  }
+              }
+          }
 
           public void CleanUp(ZipFile zip) {
                 XmlDocument content = loadXmlFile(zip, "DOMDocument.xml");
@@ -32,14 +51,26 @@ namespace FlaPreparator.Mapping {
 
           public void Load(ZipFile zip) {
               foreach (var name in _processedUsed) {
-                  DOMSymbolItem symbol = loadSymbol(zip, name);
+                  DOMSymbolItem symbol = deserializeSymbol(zip, name);
                   items.Add(name, symbol);
               }
           }
 
-          private DOMSymbolItem loadSymbol(ZipFile zip, String name) {
+          public void Save(ZipFile zip) {
+              foreach (var name in Symbols) {
+                  var symbol = items[name];
+                  var content = serializeSymbol(symbol);
+                  saveContentFile(zip, content, getLibrarySymbolFile(name));
+              }
+          }
+
+          private String getLibrarySymbolFile(String name) {
+              return "LIBRARY/{{NAME}}.xml".Replace("{{NAME}}", name);
+          }
+
+          private DOMSymbolItem deserializeSymbol(ZipFile zip, String name) {
               using (MemoryStream stream = new MemoryStream()) {
-                  ZipEntry entry = zip["LIBRARY/{{NAME}}.xml" . Replace("{{NAME}}", name)];
+                  ZipEntry entry = zip[getLibrarySymbolFile(name)];
                   entry.Extract(stream);
                   stream.Seek(0, SeekOrigin.Begin);
                   DOMSymbolItem symbol = null;
@@ -55,6 +86,24 @@ namespace FlaPreparator.Mapping {
               }
           }
 
+          private String serializeSymbol(DOMSymbolItem symbol) {
+              String content = null;
+              using (MemoryStream stream = new MemoryStream()) {
+                  try {
+                      System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(DOMSymbolItem), _xmlns);
+                      TextWriter textWriter = new StreamWriter(stream, Encoding.UTF8);
+                      serializer.Serialize(textWriter, symbol);
+                      stream.Position = 0;
+                      var textReader = new StreamReader(stream, Encoding.UTF8);
+                      content = textReader.ReadToEnd();
+                      textWriter.Close();
+                  } catch (Exception e) {
+                      e.ToString();
+                  }
+              }
+              return content;
+          }
+
           private void clearTimeline(XmlDocument content) {
               XmlNamespaceManager nm = getNamespaceManager(content);
               XmlNode timelines = content.SelectSingleNode("/fl:DOMDocument/fl:timelines", nm);
@@ -62,13 +111,15 @@ namespace FlaPreparator.Mapping {
           }
 
           private void saveXmlFile(ZipFile zip, XmlDocument content, String file) {
-              ZipEntry entry = zip[file];
-              zip.RemoveEntry(file);
               StringWriter writer = new Utf8StringWriter();
               content.Save(writer);
 
-              zip.AddEntry(file, writer.GetStringBuilder().ToString());
-              zip.Save(zip.Name);
+              saveContentFile(zip, writer.GetStringBuilder().ToString(), file);
+          }
+
+          private void saveContentFile(ZipFile zip, String content, String file) {
+              zip.RemoveEntry(file);
+              zip.AddEntry(file, content, Encoding.UTF8);
           }
 
           private void filterIncludedSymbols(XmlDocument content, List<String> neededSymbols) {
