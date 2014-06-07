@@ -5,5 +5,6 @@ using System.Text;
 
 namespace FlaPreparator.Mapping {
     abstract public class DOMElement {
+        abstract public DOMElement Clone();
     }
 }

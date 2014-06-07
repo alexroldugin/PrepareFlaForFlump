@@ -32,5 +32,19 @@ namespace FlaPreparator.Mapping {
         public String motionTweenSnap { get; set; }
 
         public bool IsEmpty { get { return elements.Count == 0; } }
+        public DOMFrame Clone() {
+            var frame = new DOMFrame();
+            frame.index = index;
+            frame.keyMode = keyMode;
+            frame.duration = duration;
+            frame.labelType = labelType;
+            frame.tweenType = tweenType;
+            frame.motionTweenSnap = motionTweenSnap;
+            frame.elements = new List<DOMElement>();
+            foreach (var element in elements) {
+                frame.elements.Add(element.Clone());
+            }
+            return frame;
+        }
     }
 }

@@ -24,5 +24,13 @@ namespace FlaPreparator.Mapping {
 
         [XmlAttribute("d")]
         public String d { get; set; }
+
+        public Matrix Clone() {
+            var m = new Matrix();
+            m.tx = tx; m.ty = ty;
+            m.a = a; m.b = b;
+            m.c = c; m.d = d;
+            return m;
+        }
     }
 }

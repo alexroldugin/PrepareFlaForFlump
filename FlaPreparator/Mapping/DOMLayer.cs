@@ -25,6 +25,9 @@ namespace FlaPreparator.Mapping {
         [XmlAttribute("autoNamed")]
         public String autoNamed { get; set; }
 
+        [XmlAttribute("layerType")]
+        public String layerType { get; set; }
+
         public bool IsEmpty { get { return frames.Count == 0; } }
         public bool HasTweens { get { return frames.FirstOrDefault((frame) => { return frame.tweenType != null; }) != null; } }
     }

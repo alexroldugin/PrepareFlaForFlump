@@ -22,5 +22,15 @@ namespace FlaPreparator.Mapping {
 
         [XmlAttribute("selected")]
         public String selected { get; set; }
+
+        override public DOMElement Clone() {
+            var el = new DOMShape();
+            el.fills = fills;
+            el.edges = edges;
+            el.strokes = strokes;
+            el.isFloating = isFloating;
+            el.selected = selected;
+            return el;
+        }
     }
 }
