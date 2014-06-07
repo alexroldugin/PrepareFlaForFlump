@@ -73,7 +73,7 @@ namespace FlaPreparator.Mapping {
           }
 
           public void Save(ZipFile zip) {
-              foreach (var name in SymbolNames) {
+              foreach (var name in items.Keys) {
                   var symbol = items[name];
                   var content = serializeSymbol(symbol);
                   saveContentFile(zip, content, getLibrarySymbolFile(name));

@@ -8,6 +8,15 @@ using System.Xml.Serialization;
 
 namespace FlaPreparator.Mapping {
     public class DOMShape : DOMElement {
+        [XmlElement]
+        public object fills { get; set; }
+
+        [XmlElement]
+        public object edges { get; set; }
+
+        [XmlElement]
+        public object strokes { get; set; }
+
         [XmlAttribute("isFloating")]
         public String isFloating { get; set; }
 
