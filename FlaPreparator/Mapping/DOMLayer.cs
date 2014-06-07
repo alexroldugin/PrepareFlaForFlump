@@ -24,5 +24,7 @@ namespace FlaPreparator.Mapping {
 
         [XmlAttribute("autoNamed")]
         public String autoNamed { get; set; }
+
+        public bool IsEmpty { get { return frames.Count == 0; } }
     }
 }

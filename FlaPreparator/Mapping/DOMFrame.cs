@@ -24,5 +24,13 @@ namespace FlaPreparator.Mapping {
 
         [XmlAttribute("labelType")]
         public String labelType { get; set; }
+
+        [XmlAttribute("tweenType")]
+        public String tweenType { get; set; }
+
+        [XmlAttribute("motionTweenSnap")]
+        public String motionTweenSnap { get; set; }
+
+        public bool IsEmpty { get { return elements.Count == 0; } }
     }
 }
