@@ -26,5 +26,6 @@ namespace FlaPreparator.Mapping {
         public String autoNamed { get; set; }
 
         public bool IsEmpty { get { return frames.Count == 0; } }
+        public bool HasTweens { get { return frames.FirstOrDefault((frame) => { return frame.tweenType != null; }) != null; } }
     }
 }

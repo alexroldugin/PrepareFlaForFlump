@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
+using FlaPreparator.Commands;
 
 namespace FlaPreparator {
   internal class Program {
@@ -25,7 +26,10 @@ namespace FlaPreparator {
       else {
         String file = args[0];
         Preparator preparator = new Preparator();
-        preparator.Process(file);
+        preparator.Process(file, new List<ICommand> {
+            new DistributeTweeners(),
+            new MarkItemsAsExportable()
+        });
       }
     }
   }

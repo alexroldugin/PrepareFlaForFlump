@@ -12,14 +12,14 @@ using System.Xml.Schema;
 using Ionic.Zip;
 
 namespace FlaPreparator.Mapping {
-    class Library {
+    public class Library {
           List<String> _processedUsed = new List<String>();
           String _xmlns = "http://ns.adobe.com/xfl/2008/";
 
           Dictionary<String, DOMSymbolItem> items = new Dictionary<String, DOMSymbolItem>();
           public Dictionary<String, DOMSymbolItem> Items { get { return items; } }
 
-          public IEnumerable<String> Symbols {
+          public IEnumerable<String> SymbolNames {
               get {
                   foreach(String name in items.Keys) {
                       var symbol = items[name];
@@ -28,11 +28,27 @@ namespace FlaPreparator.Mapping {
               }
           }
 
-          public IEnumerable<String> Sprites {
+          public IEnumerable<DOMSymbolItem> Symbols {
+              get {
+                  foreach (var symbol in items.Values) {
+                      if (!symbol.IsSprite()) { yield return symbol; }
+                  }
+              }
+          }
+
+          public IEnumerable<String> SpriteNames {
               get {
                   foreach (String name in items.Keys) {
                       var symbol = items[name];
                       if (symbol.IsSprite()) { yield return name; }
+                  }
+              }
+          }
+
+          public IEnumerable<DOMSymbolItem> Sprites {
+              get {
+                  foreach (var symbol in items.Values) {
+                      if (symbol.IsSprite()) { yield return symbol; }
                   }
               }
           }
@@ -57,7 +73,7 @@ namespace FlaPreparator.Mapping {
           }
 
           public void Save(ZipFile zip) {
-              foreach (var name in Symbols) {
+              foreach (var name in SymbolNames) {
                   var symbol = items[name];
                   var content = serializeSymbol(symbol);
                   saveContentFile(zip, content, getLibrarySymbolFile(name));
