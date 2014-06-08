@@ -50,7 +50,9 @@
     <Compile Include="Commands\DistributeTweeners.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Mapping\DOMCompiledClipInstance.cs" />
+    <Compile Include="Mapping\DOMDocument.cs" />
     <Compile Include="Mapping\DOMElement.cs" />
+    <Compile Include="Mapping\DOMFolderItem.cs" />
     <Compile Include="Mapping\DOMFrame.cs" />
     <Compile Include="Mapping\DOMLayer.cs" />
     <Compile Include="Mapping\DOMShape.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="Mapping\DOMSymbolItem.cs" />
     <Compile Include="Mapping\DOMTimeline.cs" />
     <Compile Include="Mapping\Library.cs" />
+    <Compile Include="Mapping\LibrarySymbolDeclaration.cs" />
     <Compile Include="Mapping\Matrix.cs" />
     <Compile Include="Mapping\Point.cs" />
     <Compile Include="Preparator.cs" />

@@ -29,7 +29,8 @@ namespace FlaPreparator {
         preparator.Process(file, new List<ICommand> {
             new FlumpLint(),
             new DistributeTweeners(),
-            new MarkItemsAsExportable()
+            new MarkItemsAsExportable(),
+            new PrepareSymbolsWithEffects()
         });
       }
     }

@@ -25,6 +25,7 @@ namespace FlaPreparator {
               var lib = new Library();
               lib.CleanUp(zip);
               lib.Load(zip);
+              lib.RemoveLoadedData(zip2);
               foreach (var command in commands) { if (!command.Run(lib)) { break; } }
               lib.Save(zip2);
           }
