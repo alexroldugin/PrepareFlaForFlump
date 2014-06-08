@@ -8,6 +8,6 @@ using FlaPreparator.Mapping;
 
 namespace FlaPreparator.Commands {
     public interface ICommand {
-        void Run(Library lib);
+        bool Run(Library lib);
     }
 }

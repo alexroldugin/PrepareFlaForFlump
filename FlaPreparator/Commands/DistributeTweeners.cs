@@ -8,7 +8,7 @@ using FlaPreparator.Mapping;
 
 namespace FlaPreparator.Commands {
     class DistributeTweeners : ICommand {
-        void ICommand.Run(Library lib) {
+        bool ICommand.Run(Library lib) {
             foreach (var symbol in lib.Symbols) {
                 foreach (var timeline in symbol.timeline) {
                     foreach (var layer in timeline.layers.FindAll((l) => { return l.HasTweens && ! "mask" . Equals(l.layerType); })) {
@@ -16,6 +16,7 @@ namespace FlaPreparator.Commands {
                     }
                 }
             }
+            return true;
         }
 
         void distributeTweners(DOMLayer layer) {

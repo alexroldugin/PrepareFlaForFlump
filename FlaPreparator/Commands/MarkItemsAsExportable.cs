@@ -8,7 +8,7 @@ using FlaPreparator.Mapping;
 
 namespace FlaPreparator.Commands {
     class MarkItemsAsExportable : ICommand {
-        void ICommand.Run(Library lib) {
+        bool ICommand.Run(Library lib) {
             foreach (var symbol in lib.Symbols) {
                 setupSymbolExportable(symbol);
             }
@@ -17,6 +17,7 @@ namespace FlaPreparator.Commands {
                 symbol.linkageBaseClass = "flash.display.Sprite";
                 setupSymbolExportable(symbol);
             }
+            return true;
         }
 
         void setupSymbolExportable(DOMSymbolItem symbol) {
