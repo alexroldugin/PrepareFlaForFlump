@@ -36,5 +36,7 @@ namespace FlaPreparator.Mapping {
             }
             return el;
         }
+
+        public bool HasFilters { get { return filters != null; } }
     }
 }
