@@ -27,6 +27,7 @@ namespace FlaPreparator {
         String file = args[0];
         Preparator preparator = new Preparator();
         preparator.Process(file, new List<ICommand> {
+            new FlumpLint(),
             new DistributeTweeners(),
             new MarkItemsAsExportable()
         });

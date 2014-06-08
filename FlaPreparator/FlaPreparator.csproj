@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\FlumpLint.cs" />
     <Compile Include="Commands\MarkItemsAsExportable.cs" />
     <Compile Include="Commands\DistributeTweeners.cs" />
     <Compile Include="Commands\ICommand.cs" />
