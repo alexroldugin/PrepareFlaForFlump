@@ -85,6 +85,7 @@ namespace FlaPreparator.Mapping {
               }
               var documentContent = serializeObject<DOMDocument>(content);
               saveContentFile(zip, documentContent, "DOMDocument.xml");
+              zip.Save();
           }
 
           private String getLibrarySymbolFile(String name) {
