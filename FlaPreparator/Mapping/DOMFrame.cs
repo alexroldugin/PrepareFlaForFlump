@@ -16,6 +16,9 @@ namespace FlaPreparator.Mapping {
         [XmlAttribute("index")]
         public String index { get; set; }
 
+        [XmlAttribute("name")]
+        public String name { get; set; }
+
         [XmlAttribute("keyMode")]
         public String keyMode { get; set; }
 
