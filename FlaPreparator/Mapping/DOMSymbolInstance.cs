@@ -17,6 +17,9 @@ namespace FlaPreparator.Mapping {
         [XmlAttribute("libraryItemName")]
         public String libraryItemName { get; set; }
 
+        [XmlElement("filters")]
+        public object filters { get; set; }
+
         override public DOMElement Clone() {
             var el = new DOMSymbolInstance();
             el.libraryItemName = libraryItemName;
