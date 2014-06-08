@@ -11,7 +11,7 @@ namespace FlaPreparator.Commands {
         void ICommand.Run(Library lib) {
             foreach (var symbol in lib.Symbols) {
                 foreach (var timeline in symbol.timeline) {
-                    foreach (var layer in timeline.layers.FindAll((l) => { return l.HasTweens && ! "guide" . Equals(l.layerType); })) {
+                    foreach (var layer in timeline.layers.FindAll((l) => { return l.HasTweens && ! "mask" . Equals(l.layerType); })) {
                         distributeTweners(layer);
                     }
                 }
